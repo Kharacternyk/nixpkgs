@@ -13,7 +13,7 @@
 #
 {
   system ? builtins.currentSystem,
-  nixpkgs ? null,
+  nixpkgs ? ./.,
 }:
 let
   inherit (import ./ci { inherit nixpkgs system; }) pkgs fmt;
@@ -38,5 +38,15 @@ curPkgs
     # Command-line utility for working with GitHub
     # Used by nixpkgs-review to fetch eval results
     gh
+    (
+      pkgs.python313.withPackages (packages: [
+        packages.modal
+      ])
+    )
+    (
+      pkgs.python314.withPackages (packages: [
+        packages.modal
+      ])
+    )
   ];
 }
